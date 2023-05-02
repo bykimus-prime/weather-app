@@ -1,7 +1,7 @@
 async function fetchWeather() {
    try {
       // fetch json data
-      const response = await fetch('https://api.weatherapi.com/v1/current.json?key=e4ce66e034244ced83270052231804&q=tokyo', { mode: 'cors' });
+      const response = await fetch('https://api.weatherapi.com/v1/current.json?key=e4ce66e034244ced83270052231804&q=seattle', { mode: 'cors' });
       const locationData = await response.json();
       console.log(locationData);
       console.log(locationData.location.name);
@@ -35,18 +35,32 @@ async function fetchWeather() {
 fetchWeather();
 
 function renderWeather(locationObject) {
-   console.log(locationObject.city);
+   console.log(locationObject.cloud);
+   // query selectors
    const location = document.querySelector('.location');
-   location.textContent = `${locationObject.city}, ${locationObject.country}`;
-   // const time = document.querySelector('');
-   // const temp = document.querySelector('');
-   // const wind = document.querySelector('');
-   // const pressure = document.querySelector('');
-   // const humidity = document.querySelector('');
+   const time = document.querySelector('.date');
+   const temp = document.querySelector('.temperature');
+   const wind = document.querySelector('.wind');
+   const pressure = document.querySelector('.pressure');
+   const humidity = document.querySelector('.humidity');
    // const cloud = document.querySelector('');
-   // const feelsLike = document.querySelector('');
-   // const visibility = document.querySelector('');
-   // const uvIndex = document.querySelector('');
+   const feelsLike = document.querySelector('.feels-like');
+   const visibility = document.querySelector('.visibility');
+   const uvIndex = document.querySelector('.uv-index');
    // const weatherText = document.querySelector('');
    // const weatherIcon = document.querySelector('');
+
+   // fill in selected queries with info from the weather object
+   location.textContent = `${locationObject.city}, ${locationObject.country}`;
+   time.textContent = locationObject.localTime;
+   temp.textContent = `${locationObject.tempC}\u00B0C`;
+   wind.textContent = `${locationObject.windKph} kph`;
+   pressure.textContent = `${locationObject.pressureMb} mb`;
+   humidity.textContent = `${locationObject.humidity}%`;
+   // cloud.textContent = locationObject.
+   feelsLike.textContent = `${locationObject.feelsLikeC}\u00B0C`;
+   visibility.textContent = `${locationObject.visKm} km`;
+   uvIndex.textContent = locationObject.uv;
+   // weatherText.textContent = locationObject.
+   // weatherIcon.textContent = locationObject.
 }
