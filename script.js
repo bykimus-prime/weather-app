@@ -17,7 +17,6 @@ async function fetchWeather() {
          pressureMb: locationData.current.pressure_mb,
          pressureIn: locationData.current.pressure_in,
          humidity: locationData.current.humidity,
-         cloud: locationData.current.cloud,
          feelsLikeC: locationData.current.feelslike_c,
          feelsLikeF: locationData.current.feelslike_f,
          visKm: locationData.current.vis_km,
@@ -26,7 +25,7 @@ async function fetchWeather() {
          text: locationData.current.condition.text,
          icon: locationData.current.condition.icon
       }
-      console.log(locationObject);
+      console.log(locationObject.icon);
       renderWeather(locationObject);
    } catch (error) {
       alert(error);
@@ -35,7 +34,7 @@ async function fetchWeather() {
 fetchWeather();
 
 function renderWeather(locationObject) {
-   console.log(locationObject.cloud);
+   console.log(locationObject.icon);
    // query selectors
    const location = document.querySelector('.location');
    const time = document.querySelector('.date');
@@ -47,8 +46,8 @@ function renderWeather(locationObject) {
    const feelsLike = document.querySelector('.feels-like');
    const visibility = document.querySelector('.visibility');
    const uvIndex = document.querySelector('.uv-index');
-   // const weatherText = document.querySelector('');
-   // const weatherIcon = document.querySelector('');
+   const weatherText = document.querySelector('.current-weather');
+   // const weatherIcon = document.querySelector('.weather-icon');
 
    // fill in selected queries with info from the weather object
    location.textContent = `${locationObject.city}, ${locationObject.country}`;
@@ -57,10 +56,9 @@ function renderWeather(locationObject) {
    wind.textContent = `${locationObject.windKph} kph`;
    pressure.textContent = `${locationObject.pressureMb} mb`;
    humidity.textContent = `${locationObject.humidity}%`;
-   // cloud.textContent = locationObject.
    feelsLike.textContent = `${locationObject.feelsLikeC}\u00B0C`;
    visibility.textContent = `${locationObject.visKm} km`;
    uvIndex.textContent = locationObject.uv;
-   // weatherText.textContent = locationObject.
-   // weatherIcon.textContent = locationObject.
+   weatherText.textContent = locationObject.text;
+   // weatherIcon.src = locationObject.icon;
 }
