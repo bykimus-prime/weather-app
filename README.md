@@ -7,8 +7,6 @@ A standard weather app. This project focuses on using APIs, specifically for wea
 - JavaScript
 - HTML
 - CSS
-- Webpack
-- npm
 
 ## Live Demo
 [weather app](https://bykimus-prime.github.io/weather-app/)
@@ -40,6 +38,4 @@ Deployed on [GitHub Pages](https://pages.github.com/)
 
 ## Image Credits
 
-<!-- - trash can icon by Icons8
-- edit button icon by SVG Repo
-- burger menu icon by SVG Repo -->
+- weather icons from WeatherAPI.com
