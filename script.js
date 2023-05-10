@@ -1,7 +1,7 @@
 async function fetchWeather() {
    try {
       // fetch json data
-      const response = await fetch('https://api.weatherapi.com/v1/current.json?key=e4ce66e034244ced83270052231804&q=seattle', { mode: 'cors' });
+      const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=e4ce66e034244ced83270052231804&q=seattle&days=2', { mode: 'cors' });
       const locationData = await response.json();
       console.log(locationData);
       console.log(locationData.location.name);
@@ -24,10 +24,18 @@ async function fetchWeather() {
          visMiles: locationData.current.vis_miles,
          uv: locationData.current.uv,
          text: locationData.current.condition.text,
-         iconCode: locationData.current.condition.code
+         iconCode: locationData.current.condition.code,
+         // // forecast data, day
+         // dayDate: locationData.forecast.forecastday.date,
+         // dayTempC
+         // dayMaxTempC
+         // dayMinTempC
+         // dayTempF
+         // dayMaxTempF
+         // dayMinTempF
+         // // forecast data, hour
+         // dayHour: locationData.forecast.forecastday.hour
       }
-      console.log(locationObject.iconCode);
-      console.log(locationObject.isDay);
       renderWeather(locationObject);
    } catch (error) {
       alert(error);
@@ -41,7 +49,6 @@ function renderWeather(locationObject) {
    } else {
       dayOrNight = 'night';
    }
-   console.log(dayOrNight);
    // query selectors
    const location = document.querySelector('.location');
    const time = document.querySelector('.date');
@@ -164,10 +171,5 @@ function renderWeather(locationObject) {
    } else if (locationObject.iconCode == 1282) {
       weatherIcon = `./images/${dayOrNight}/395.png`;
    }
-   console.log(weatherIcon);
    weatherIconDisplay.src = weatherIcon;
 }
-
-// function getIcon() {
-//    if (locationObject.iconCode == 1000)
-// }
