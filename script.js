@@ -1,7 +1,7 @@
 async function fetchWeather() {
    try {
       // fetch json data
-      const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=e4ce66e034244ced83270052231804&q=seattle&days=2', { mode: 'cors' });
+      const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=e4ce66e034244ced83270052231804&q=seattle&days=6', { mode: 'cors' });
       const locationData = await response.json();
       console.log(locationData);
       console.log(locationData.location.name);
@@ -25,17 +25,31 @@ async function fetchWeather() {
          uv: locationData.current.uv,
          text: locationData.current.condition.text,
          iconCode: locationData.current.condition.code,
-         // // forecast data, day
-         // dayDate: locationData.forecast.forecastday.date,
-         // dayTempC
-         // dayMaxTempC
-         // dayMinTempC
-         // dayTempF
-         // dayMaxTempF
-         // dayMinTempF
-         // // forecast data, hour
-         // dayHour: locationData.forecast.forecastday.hour
+         // forecast data, hour
+         // dayHour: locationData.forecast.forecastday[0].hour[0].time,
+         // forecast data, day
+         dayDate1: locationData.forecast.forecastday[0].date, // api free tier only gives 3 days
+         dayDate1TempC: locationData.forecast.forecastday[0].day.avgtemp_c,
+         dayDate1TempF: locationData.forecast.forecastday[0].day.avgtemp_f,
+         dayDate1Rain: locationData.forecast.forecastday[0].day.daily_chance_of_rain,
+         dayDate1PrecipMm: locationData.forecast.forecastday[0].day.totalprecip_mm,
+         dayDate1PrecipIn: locationData.forecast.forecastday[0].day.totalprecip_in,
+         // next day
+         dayDate2: locationData.forecast.forecastday[1].date,
+         dayDate2TempC: locationData.forecast.forecastday[1].day.avgtemp_c,
+         dayDate2TempF: locationData.forecast.forecastday[1].day.avgtemp_f,
+         dayDate2Rain: locationData.forecast.forecastday[1].day.daily_chance_of_rain,
+         dayDate2PrecipMm: locationData.forecast.forecastday[1].day.totalprecip_mm,
+         dayDate2PrecipIn: locationData.forecast.forecastday[1].day.totalprecip_in,
+         // third day
+         dayDate3: locationData.forecast.forecastday[2].date,
+         dayDate3TempC: locationData.forecast.forecastday[2].day.avgtemp_c,
+         dayDate3TempF: locationData.forecast.forecastday[2].day.avgtemp_f,
+         dayDate3Rain: locationData.forecast.forecastday[2].day.daily_chance_of_rain,
+         dayDate3PrecipMm: locationData.forecast.forecastday[2].day.totalprecip_mm,
+         dayDate3PrecipIn: locationData.forecast.forecastday[2].day.totalprecip_in
       }
+      // console.log(locationObject.dayHour);
       renderWeather(locationObject);
    } catch (error) {
       alert(error);
@@ -61,6 +75,19 @@ function renderWeather(locationObject) {
    const uvIndex = document.querySelector('.uv-index');
    const weatherText = document.querySelector('.current-weather');
    const weatherIconDisplay = document.querySelector('.weather-icon-display');
+   // forecast day selectors
+   const day1 = document.querySelector('.day1');
+   const day1Temp = document.querySelector('.daily-temp1');
+   const day1Rain = document.querySelector('.daily-rain-chance1');
+   const day1Precip = document.querySelector('.daily-precipitation1');
+   const day2 = document.querySelector('.day2');
+   const day2Temp = document.querySelector('.daily-temp2');
+   const day2Rain = document.querySelector('.daily-rain-chance2');
+   const day2Precip = document.querySelector('.daily-precipitation2');
+   const day3 = document.querySelector('.day3');
+   const day3Temp = document.querySelector('.daily-temp3');
+   const day3Rain = document.querySelector('.daily-rain-chance3');
+   const day3Precip = document.querySelector('.daily-precipitation3');
 
    // fill in selected queries with info from the weather object
    location.textContent = `${locationObject.city}, ${locationObject.country}`;
@@ -172,4 +199,17 @@ function renderWeather(locationObject) {
       weatherIcon = `./images/${dayOrNight}/395.png`;
    }
    weatherIconDisplay.src = weatherIcon;
+   // filling out weather forecast dom info
+   day1.textContent = `${locationObject.dayDate1}`;
+   day1Temp.textContent = `${locationObject.dayDate1TempC}\u00B0C`;
+   day1Rain.textContent = `${locationObject.dayDate1Rain}%`;
+   day1Precip.textContent = `${locationObject.dayDate1PrecipMm}mm`;
+   day2.textContent = `${locationObject.dayDate2}`;
+   day2Temp.textContent = `${locationObject.dayDate2TempC}\u00B0C`;
+   day2Rain.textContent = `${locationObject.dayDate2Rain}%`;
+   day2Precip.textContent = `${locationObject.dayDate2PrecipMm}mm`;
+   day3.textContent = `${locationObject.dayDate3}`;
+   day3Temp.textContent = `${locationObject.dayDate3TempC}\u00B0C`;
+   day3Rain.textContent = `${locationObject.dayDate3Rain}%`;
+   day3Precip.textContent = `${locationObject.dayDate3PrecipMm}mm`;
 }
