@@ -25,10 +25,29 @@ async function fetchWeather() {
          uv: locationData.current.uv,
          text: locationData.current.condition.text,
          iconCode: locationData.current.condition.code,
-         // forecast data, hour
-         // dayHour: locationData.forecast.forecastday[0].hour[0].time,
-         // forecast data, day
-         dayDate1: locationData.forecast.forecastday[0].date, // api free tier only gives 3 days
+         // forecast data, hour. api free tier only gives 3 hours apparently
+         hour1: locationData.forecast.forecastday[0].hour[0].time.substr(11, 15), // returns only part of a string
+         hour1TempC: locationData.forecast.forecastday[0].hour[0].temp_c,
+         hour1TempF: locationData.forecast.forecastday[0].hour[0].temp_f,
+         hour1Rain: locationData.forecast.forecastday[0].hour[0].chance_of_rain,
+         hour1PrecipMm: locationData.forecast.forecastday[0].hour[0].precip_mm,
+         hour1PrecipIn: locationData.forecast.forecastday[0].hour[0].precip_in,
+         // next hour + 1
+         hour2: locationData.forecast.forecastday[1].hour[1].time.substr(11, 15),
+         hour2TempC: locationData.forecast.forecastday[1].hour[1].temp_c,
+         hour2TempF: locationData.forecast.forecastday[1].hour[1].temp_f,
+         hour2Rain: locationData.forecast.forecastday[1].hour[1].chance_of_rain,
+         hour2PrecipMm: locationData.forecast.forecastday[1].hour[1].precip_mm,
+         hour2PrecipIn: locationData.forecast.forecastday[1].hour[1].precip_in,
+         // next hour + 2
+         hour3: locationData.forecast.forecastday[2].hour[2].time.substr(11, 15),
+         hour3TempC: locationData.forecast.forecastday[2].hour[2].temp_c,
+         hour3TempF: locationData.forecast.forecastday[2].hour[2].temp_f,
+         hour3Rain: locationData.forecast.forecastday[2].hour[2].chance_of_rain,
+         hour3PrecipMm: locationData.forecast.forecastday[2].hour[2].precip_mm,
+         hour3PrecipIn: locationData.forecast.forecastday[2].hour[2].precip_in,
+         // forecast data, day. api free tier only gives 3 days
+         dayDate1: locationData.forecast.forecastday[0].date,
          dayDate1TempC: locationData.forecast.forecastday[0].day.avgtemp_c,
          dayDate1TempF: locationData.forecast.forecastday[0].day.avgtemp_f,
          dayDate1Rain: locationData.forecast.forecastday[0].day.daily_chance_of_rain,
@@ -49,7 +68,6 @@ async function fetchWeather() {
          dayDate3PrecipMm: locationData.forecast.forecastday[2].day.totalprecip_mm,
          dayDate3PrecipIn: locationData.forecast.forecastday[2].day.totalprecip_in
       }
-      // console.log(locationObject.dayHour);
       renderWeather(locationObject);
    } catch (error) {
       alert(error);
@@ -75,6 +93,19 @@ function renderWeather(locationObject) {
    const uvIndex = document.querySelector('.uv-index');
    const weatherText = document.querySelector('.current-weather');
    const weatherIconDisplay = document.querySelector('.weather-icon-display');
+   // forecast hour selectors
+   const hour1 = document.querySelector('.hour1');
+   const hour1Temp = document.querySelector('.hourly-temp1');
+   const hour1Rain = document.querySelector('.hourly-rain-chance1');
+   const hour1Precip = document.querySelector('.hourly-precipitation1');
+   const hour2 = document.querySelector('.hour2');
+   const hour2Temp = document.querySelector('.hourly-temp2');
+   const hour2Rain = document.querySelector('.hourly-rain-chance2');
+   const hour2Precip = document.querySelector('.hourly-precipitation2');
+   const hour3 = document.querySelector('.hour3');
+   const hour3Temp = document.querySelector('.hourly-temp3');
+   const hour3Rain = document.querySelector('.hourly-rain-chance3');
+   const hour3Precip = document.querySelector('.hourly-precipitation3');
    // forecast day selectors
    const day1 = document.querySelector('.day1');
    const day1Temp = document.querySelector('.daily-temp1');
@@ -199,7 +230,20 @@ function renderWeather(locationObject) {
       weatherIcon = `./images/${dayOrNight}/395.png`;
    }
    weatherIconDisplay.src = weatherIcon;
-   // filling out weather forecast dom info
+   // filling out weather forecast hourly dom info
+   hour1.textContent = `${locationObject.hour1}`;
+   hour1Temp.textContent = `${locationObject.hour1TempC}\u00B0C`;
+   hour1Rain.textContent = `${locationObject.hour1Rain}%`;
+   hour1Precip.textContent = `${locationObject.hour1PrecipMm}mm`;
+   hour2.textContent = `${locationObject.hour2}`
+   hour2Temp.textContent = `${locationObject.hour2TempC}\u00B0C`;
+   hour2Rain.textContent = `${locationObject.hour2Rain}%`;
+   hour2Precip.textContent = `${locationObject.hour2PrecipMm}mm`;
+   hour3.textContent = `${locationObject.hour3}`;
+   hour3Temp.textContent = `${locationObject.hour3TempC}\u00B0C`;
+   hour3Rain.textContent = `${locationObject.hour3Rain}%`;
+   hour3Precip.textContent = `${locationObject.hour3PrecipMm}mm`;
+   // filling out weather forecast daily dom info
    day1.textContent = `${locationObject.dayDate1}`;
    day1Temp.textContent = `${locationObject.dayDate1TempC}\u00B0C`;
    day1Rain.textContent = `${locationObject.dayDate1Rain}%`;
