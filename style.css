@@ -19,7 +19,7 @@
 .header {
    background-color: var(--primary-blue);
    color: var(--primary-yellow);
-   height: 11vh;
+   height: 14vh;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -32,7 +32,7 @@
 .main {
    background-color: var(--primary-black);
    color: var(--primary-white);
-   height: 83vh;
+   height: 80vh;
    display: grid;
    grid-template-rows: 0.7fr 0.8fr 1fr 1fr;
    gap: 4px;

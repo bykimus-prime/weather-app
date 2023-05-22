@@ -1,10 +1,20 @@
-async function fetchWeather() {
+const form = document.querySelector('form');
+const submitBtn = document.querySelector('#searchSubmit');
+
+form.addEventListener('submit', handleSubmit)
+submitBtn.addEventListener('click', handleSubmit);
+
+function handleSubmit(e) {
+   e.preventDefault();
+   getLocation();
+}
+
+async function fetchWeather(location) {
+   console.log(location)
    try {
       // fetch json data
-      const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=e4ce66e034244ced83270052231804&q=seattle&days=6', { mode: 'cors' });
+      const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=e4ce66e034244ced83270052231804&q=${location}&days=3`, { mode: 'cors' });
       const locationData = await response.json();
-      console.log(locationData);
-      console.log(locationData.location.name);
       // create object with json data
       const locationObject = {
          city: locationData.location.name,
@@ -69,11 +79,12 @@ async function fetchWeather() {
          dayDate3PrecipIn: locationData.forecast.forecastday[2].day.totalprecip_in
       }
       renderWeather(locationObject);
+      form.reset(); // resets form input after fetching weather from location
    } catch (error) {
       alert(error);
    }
 }
-fetchWeather();
+fetchWeather('seattle');
 
 function renderWeather(locationObject) {
    if (locationObject.isDay === 1) {
@@ -256,4 +267,9 @@ function renderWeather(locationObject) {
    day3Temp.textContent = `${locationObject.dayDate3TempC}\u00B0C`;
    day3Rain.textContent = `${locationObject.dayDate3Rain}%`;
    day3Precip.textContent = `${locationObject.dayDate3PrecipMm}mm`;
+}
+
+function getLocation() {
+   const input = document.querySelector('#searchInput');
+   fetchWeather(input.value);
 }
