@@ -25,6 +25,7 @@ function handleSubmit(e) {
 }
 
 async function fetchWeather(location) {
+   document.getElementById("loader").style.display = "flex";
    try {
       // fetch json data
       const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=e4ce66e034244ced83270052231804&q=${location}&days=3`, { mode: 'cors' });
@@ -94,8 +95,10 @@ async function fetchWeather(location) {
       }
       renderWeather(locationObject);
       form.reset(); // resets form input after fetching weather from location
+      document.getElementById("loader").style.display = "none";
    } catch (error) {
       alert(error);
+      document.getElementById("loader").style.display = "none";
    }
 }
 fetchWeather('seattle');
