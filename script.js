@@ -2,6 +2,7 @@ const form = document.querySelector('form');
 const submitBtn = document.querySelector('#searchSubmit');
 const tempToggle = document.querySelector('input[type=checkbox]');
 let tempUnit = 'c';
+let searchLocation = 'seattle';
 
 form.addEventListener('submit', handleSubmit)
 submitBtn.addEventListener('click', handleSubmit);
@@ -15,7 +16,7 @@ tempToggle.addEventListener('click', () => {
       tempToggle.classList.remove('fahrenheit');
       tempUnit = 'c';
    }
-   console.log(tempUnit)
+   getLocation();
 })
 
 function handleSubmit(e) {
@@ -24,7 +25,6 @@ function handleSubmit(e) {
 }
 
 async function fetchWeather(location) {
-   console.log(location)
    try {
       // fetch json data
       const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=e4ce66e034244ced83270052231804&q=${location}&days=3`, { mode: 'cors' });
@@ -148,14 +148,69 @@ function renderWeather(locationObject) {
    // fill in selected queries with info from the weather object
    location.textContent = `${locationObject.city}, ${locationObject.country}`;
    time.textContent = locationObject.localTime;
-   temp.textContent = `${locationObject.tempC}\u00B0C`; // javascript way to write degree symbol
-   wind.textContent = `${locationObject.windKph} kph`;
-   pressure.textContent = `${locationObject.pressureMb} mb`;
    humidity.textContent = `${locationObject.humidity}%`;
-   feelsLike.textContent = `${locationObject.feelsLikeC}\u00B0C`;
-   visibility.textContent = `${locationObject.visKm} km`;
    uvIndex.textContent = locationObject.uv;
    weatherText.textContent = locationObject.text;
+   if (tempUnit === 'c') {
+      temp.textContent = `${locationObject.tempC}\u00B0C`; // javascript way to write degree symbol
+      wind.textContent = `${locationObject.windKph} kph`;
+      pressure.textContent = `${locationObject.pressureMb} mb`;
+      humidity.textContent = `${locationObject.humidity}%`;
+      feelsLike.textContent = `${locationObject.feelsLikeC}\u00B0C`;
+      visibility.textContent = `${locationObject.visKm} km`;
+      // filling out weather forecast hourly dom info
+      hour1Temp.textContent = `${locationObject.hour1TempC}\u00B0C`;
+      hour1Rain.textContent = `${locationObject.hour1Rain}%`;
+      hour1Precip.textContent = `${locationObject.hour1PrecipMm}mm`;
+      hour2Temp.textContent = `${locationObject.hour2TempC}\u00B0C`;
+      hour2Rain.textContent = `${locationObject.hour2Rain}%`;
+      hour2Precip.textContent = `${locationObject.hour2PrecipMm}mm`;
+      hour3Temp.textContent = `${locationObject.hour3TempC}\u00B0C`;
+      hour3Rain.textContent = `${locationObject.hour3Rain}%`;
+      hour3Precip.textContent = `${locationObject.hour3PrecipMm}mm`;
+      // filling out weather forecast daily dom info
+      day1Temp.textContent = `${locationObject.dayDate1TempC}\u00B0C`;
+      day1Rain.textContent = `${locationObject.dayDate1Rain}%`;
+      day1Precip.textContent = `${locationObject.dayDate1PrecipMm}mm`;
+      day2Temp.textContent = `${locationObject.dayDate2TempC}\u00B0C`;
+      day2Rain.textContent = `${locationObject.dayDate2Rain}%`;
+      day2Precip.textContent = `${locationObject.dayDate2PrecipMm}mm`;
+      day3Temp.textContent = `${locationObject.dayDate3TempC}\u00B0C`;
+      day3Rain.textContent = `${locationObject.dayDate3Rain}%`;
+      day3Precip.textContent = `${locationObject.dayDate3PrecipMm}mm`;
+   } else if (tempUnit === 'f') {
+      temp.textContent = `${locationObject.tempF}\u00B0F`; // javascript way to write degree symbol
+      wind.textContent = `${locationObject.windMph} mph`;
+      pressure.textContent = `${locationObject.pressureIn} in`;
+      feelsLike.textContent = `${locationObject.feelsLikeF}\u00B0F`;
+      visibility.textContent = `${locationObject.visMiles} miles`;
+      // filling out weather forecast hourly dom info
+      hour1Temp.textContent = `${locationObject.hour1TempF}\u00B0F`;
+      hour1Rain.textContent = `${locationObject.hour1Rain}%`;
+      hour1Precip.textContent = `${locationObject.hour1PrecipIn} in`;
+      hour2Temp.textContent = `${locationObject.hour2TempF}\u00B0F`;
+      hour2Rain.textContent = `${locationObject.hour2Rain}%`;
+      hour2Precip.textContent = `${locationObject.hour2PrecipIn} in`;
+      hour3Temp.textContent = `${locationObject.hour3TempF}\u00B0F`;
+      hour3Rain.textContent = `${locationObject.hour3Rain}%`;
+      hour3Precip.textContent = `${locationObject.hour3PrecipIn} in`;
+      // filling out weather forecast daily dom info
+      day1Temp.textContent = `${locationObject.dayDate1TempF}\u00B0F`;
+      day1Rain.textContent = `${locationObject.dayDate1Rain}%`;
+      day1Precip.textContent = `${locationObject.dayDate1PrecipIn} in`;
+      day2Temp.textContent = `${locationObject.dayDate2TempF}\u00B0F`;
+      day2Rain.textContent = `${locationObject.dayDate2Rain}%`;
+      day2Precip.textContent = `${locationObject.dayDate2PrecipIn} in`;
+      day3Temp.textContent = `${locationObject.dayDate3TempF}\u00B0F`;
+      day3Rain.textContent = `${locationObject.dayDate3Rain}%`;
+      day3Precip.textContent = `${locationObject.dayDate3PrecipIn} in`;
+   }
+   hour1.textContent = `${locationObject.hour1}`;
+   hour2.textContent = `${locationObject.hour2}`
+   hour3.textContent = `${locationObject.hour3}`;
+   day1.textContent = `${locationObject.dayDate1}`;
+   day2.textContent = `${locationObject.dayDate2}`;
+   day3.textContent = `${locationObject.dayDate3}`;
    // get image from folder based on code from api
    if (locationObject.iconCode == 1000) {
       weatherIcon = `./images/${dayOrNight}/113.png`;
@@ -255,35 +310,14 @@ function renderWeather(locationObject) {
       weatherIcon = `./images/${dayOrNight}/395.png`;
    }
    weatherIconDisplay.src = weatherIcon;
-   // filling out weather forecast hourly dom info
-   hour1.textContent = `${locationObject.hour1}`;
-   hour1Temp.textContent = `${locationObject.hour1TempC}\u00B0C`;
-   hour1Rain.textContent = `${locationObject.hour1Rain}%`;
-   hour1Precip.textContent = `${locationObject.hour1PrecipMm}mm`;
-   hour2.textContent = `${locationObject.hour2}`
-   hour2Temp.textContent = `${locationObject.hour2TempC}\u00B0C`;
-   hour2Rain.textContent = `${locationObject.hour2Rain}%`;
-   hour2Precip.textContent = `${locationObject.hour2PrecipMm}mm`;
-   hour3.textContent = `${locationObject.hour3}`;
-   hour3Temp.textContent = `${locationObject.hour3TempC}\u00B0C`;
-   hour3Rain.textContent = `${locationObject.hour3Rain}%`;
-   hour3Precip.textContent = `${locationObject.hour3PrecipMm}mm`;
-   // filling out weather forecast daily dom info
-   day1.textContent = `${locationObject.dayDate1}`;
-   day1Temp.textContent = `${locationObject.dayDate1TempC}\u00B0C`;
-   day1Rain.textContent = `${locationObject.dayDate1Rain}%`;
-   day1Precip.textContent = `${locationObject.dayDate1PrecipMm}mm`;
-   day2.textContent = `${locationObject.dayDate2}`;
-   day2Temp.textContent = `${locationObject.dayDate2TempC}\u00B0C`;
-   day2Rain.textContent = `${locationObject.dayDate2Rain}%`;
-   day2Precip.textContent = `${locationObject.dayDate2PrecipMm}mm`;
-   day3.textContent = `${locationObject.dayDate3}`;
-   day3Temp.textContent = `${locationObject.dayDate3TempC}\u00B0C`;
-   day3Rain.textContent = `${locationObject.dayDate3Rain}%`;
-   day3Precip.textContent = `${locationObject.dayDate3PrecipMm}mm`;
 }
 
 function getLocation() {
    const input = document.querySelector('#searchInput');
-   fetchWeather(input.value);
+   if (input.value === '') {
+      fetchWeather(searchLocation);
+   } else {
+      searchLocation = input.value;
+      fetchWeather(searchLocation);
+   }
 }
