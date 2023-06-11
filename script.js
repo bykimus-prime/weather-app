@@ -1,8 +1,22 @@
 const form = document.querySelector('form');
 const submitBtn = document.querySelector('#searchSubmit');
+const tempToggle = document.querySelector('input[type=checkbox]');
+let tempUnit = 'c';
 
 form.addEventListener('submit', handleSubmit)
 submitBtn.addEventListener('click', handleSubmit);
+tempToggle.addEventListener('click', () => {
+   if (tempUnit === 'c') {
+      tempToggle.classList.remove('celsius');
+      tempToggle.classList.add('fahrenheit');
+      tempUnit = 'f';
+   } else if (tempUnit === 'f') {
+      tempToggle.classList.add('celsius');
+      tempToggle.classList.remove('fahrenheit');
+      tempUnit = 'c';
+   }
+   console.log(tempUnit)
+})
 
 function handleSubmit(e) {
    e.preventDefault();

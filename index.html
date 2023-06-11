@@ -13,9 +13,16 @@
 <body>
    <div class="header">
       <h1>Weather App</h1>
-      <div class="temp-toggle">C to F</div>
+      <div class="temp-toggle">
+         <p>&deg;C</p> <!-- shows degree symbol in html -->
+         <label class="switch">
+            <input class="celsius" type="checkbox">
+            <span class="slider round"></span>
+         </label>
+         <p>&deg;F</p>
+      </div>
       <form class="search">
-         <label for="search"></label>
+         <label for="searchInput"></label>
          <input type="text" id="searchInput" placeholder="City...">
          <input type="submit" id="searchSubmit">
       </form>
