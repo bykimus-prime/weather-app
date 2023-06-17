@@ -1,6 +1,8 @@
 const form = document.querySelector('form');
 const submitBtn = document.querySelector('#searchSubmit');
 const tempToggle = document.querySelector('input[type=checkbox]');
+const celsius = document.querySelector('.celsius');
+const fahrenheit = document.querySelector('.fahrenheit');
 let tempUnit = 'c';
 let searchLocation = 'seattle';
 
@@ -8,12 +10,12 @@ form.addEventListener('submit', handleSubmit)
 submitBtn.addEventListener('click', handleSubmit);
 tempToggle.addEventListener('click', () => {
    if (tempUnit === 'c') {
-      tempToggle.classList.remove('celsius');
-      tempToggle.classList.add('fahrenheit');
+      fahrenheit.classList.add('selected-unit');
+      celsius.classList.remove('selected-unit');
       tempUnit = 'f';
    } else if (tempUnit === 'f') {
-      tempToggle.classList.add('celsius');
-      tempToggle.classList.remove('fahrenheit');
+      fahrenheit.classList.remove('selected-unit');
+      celsius.classList.add('selected-unit');
       tempUnit = 'c';
    }
    getLocation();

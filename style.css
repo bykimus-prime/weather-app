@@ -34,6 +34,11 @@
    height: 30px;
 }
 
+.selected-unit {
+   font-size: 18px;
+   font-weight: bold;
+}
+
 /* box around the slider */
 .switch {
    position: relative;
@@ -103,7 +108,6 @@ input:checked+.slider:before {
    display: grid;
    grid-template-rows: 0.7fr 0.8fr 1fr 1fr;
    gap: 4px;
-   overflow-y: scroll;
 }
 
 .main-information {
@@ -120,7 +124,6 @@ input:checked+.slider:before {
    align-items: center;
    justify-content: space-between;
    width: 200px;
-   margin-bottom: 10px;
 }
 
 .temperature {
@@ -173,7 +176,7 @@ input:checked+.slider:before {
 
 .hourly-weather div,
 .weekly-weather div {
-   width: 80%;
+   width: 95%;
    display: flex;
    justify-content: center;
 }
@@ -238,4 +241,31 @@ input:checked+.slider:before {
 #loader p {
    color: white;
    margin-left: 20px;
+}
+
+/* mobile optimization */
+/* mobile optimization */
+
+@media (max-height: 668px) {
+   .main {
+      height: auto;
+   }
+}
+
+@media (max-width: 650px) {
+   .hourly-weather,
+   .weekly-weather {
+      justify-content: space-between;
+      padding: 4px 0;
+   }
+
+   .hourly-weather div,
+   .weekly-weather div {
+      padding-top: 4px;
+   }
+
+   .hourly-legend div,
+   .daily-legend div {
+      text-align: center;
+   }
 }

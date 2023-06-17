@@ -18,12 +18,12 @@
    <div class="header">
       <h1>Weather App</h1>
       <div class="temp-toggle">
-         <p>&deg;C</p> <!-- shows degree symbol in html -->
+         <p class="celsius selected-unit">&deg;C</p> <!-- shows degree symbol in html -->
          <label class="switch">
-            <input class="celsius" type="checkbox">
+            <input type="checkbox">
             <span class="slider round"></span>
          </label>
-         <p>&deg;F</p>
+         <p class="fahrenheit">&deg;F</p>
       </div>
       <form class="search">
          <label for="searchInput"></label>
@@ -95,7 +95,7 @@
          <p>Weekly Forecast</p>
          <div class="daily-legend">
             <div class="day">Day</div>
-            <div class="daily-temp">Average Temperature</div>
+            <div class="daily-temp">Average Temp</div>
             <div class="daily-rain-chance">Chance of Rain</div>
             <div class="daily-precipitation">Precipitation</div>
          </div>
